@@ -67,6 +67,7 @@ class FirebaseAuthBackend {
         .signInWithEmailAndPassword(email, password)
         .then(
           user => {
+            console.log(user)
             const currentUser = JSON.stringify(firebase.auth().currentUser);
             resolve(currentUser);
           },

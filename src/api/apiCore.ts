@@ -45,6 +45,11 @@ class APIClient {
    * Fetches data from given url
    */
   get = (url: string, params?: {}) => {
+    if(getLoggedinUser()) {
+      if(getLoggedinUser().jwt)
+      setAuthorization(getLoggedinUser().jwt)
+    }
+    
     return axios.get(url, params);
   };
 
@@ -52,6 +57,8 @@ class APIClient {
    * post given data to url
    */
   create = (url: string, data?: {}) => {
+    console.log(data, url)
+
     return axios.post(url, data);
   };
 
@@ -59,6 +66,8 @@ class APIClient {
    * Updates data
    */
   update = (url: string, data?: {}) => {
+    console.log(data, url)
+
     return axios.put(url, data);
   };
 
@@ -106,6 +115,7 @@ class APIClient {
 
 const getLoggedinUser = () => {
   const user = localStorage.getItem("authUser");
+  console.log(user)
   if (!user) {
     return null;
   } else {

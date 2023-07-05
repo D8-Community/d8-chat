@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { profileDetails } from "../../data/myProfile";
 import { Link } from "react-router-dom";
 import {
   Nav,
@@ -124,7 +124,7 @@ const ProfileDropdownMenu = ({ onChangeTab }: ProfileDropdownMenuProps) => {
       toggle={toggle}
     >
       <DropdownToggle nav className="bg-transparent">
-        <img src={avatar1} alt="" className="profile-user rounded-circle" />
+        <img src={profileDetails.basicDetails.avatar} alt="" className="profile-user rounded-circle" />
       </DropdownToggle>
       <DropdownMenu>
         <DropdownItem

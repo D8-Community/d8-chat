@@ -16,6 +16,8 @@ export const authLoginApiResponseError = (
 });
 
 export const loginUser = (user: any) => {
+  console.log(user, 'auth.reduc.action')
+  //user.identifier = user.email;
   return {
     type: AuthLoginActionTypes.LOGIN_USER,
     payload: { user },

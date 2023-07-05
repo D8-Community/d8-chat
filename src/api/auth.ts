@@ -1,4 +1,4 @@
-import { APIClient } from "./apiCore";
+import { APIClient, setAuthorization, getLoggedinUser } from "./apiCore";
 import * as url from "./urls";
 
 const api = new APIClient();
@@ -13,7 +13,11 @@ const postJwtForgetPwd = (data: any) =>
 
 const postFakeLogin = (data: any) => api.create(url.POST_FAKE_LOGIN, data);
 
-const postJwtLogin = (data: any) => api.create(url.POST_FAKE_JWT_LOGIN, data);
+const postJwtLogin = (data: any) => {
+  //setAuthorization(data.jwt)
+  console.log(data, 'postJwtLogin')
+  return api.create(url.POST_JWT_LOGIN, data)
+};
 
 // Register Method
 const postFakeRegister = (data: any) => {
@@ -22,6 +26,7 @@ const postFakeRegister = (data: any) => {
 
 // Register Method
 const postJwtRegister = (data: any) => {
+  console.log(data)
   return api.create(url.JWT_REGISTER, data);
 };
 const changePassword = (data: object) => {

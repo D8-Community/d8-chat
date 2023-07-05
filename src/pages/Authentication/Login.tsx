@@ -49,7 +49,6 @@ const Login = (props: LoginProps) => {
       isUserLogout: state.Login.isUserLogout,
     })
   );
-
   const navigate = useNavigate();
   const location = useLocation();
   const [redirectUrl, setRedirectUrl] = useState("/");
@@ -74,8 +73,7 @@ const Login = (props: LoginProps) => {
   );
 
   const defaultValues: any = {
-    email: "admin@D8me.live",
-    password: "123456",
+
   };
 
   const methods = useForm({ defaultValues, resolver });
@@ -101,9 +99,11 @@ const Login = (props: LoginProps) => {
       const postData = {
         name: res.profileObj.name,
         email: res.profileObj.email,
+        identifier: res.profileObj.email,
         token: res.tokenObj.access_token,
         idToken: res.tokenId,
       };
+      console.log(res)
       dispatch(socialLogin(postData, type));
     } else if (type === "facebook" && res) {
       const postData = {

@@ -39,16 +39,13 @@ export interface SettingsTypes {
   security: SecurityTypes;
   status: STATUS_TYPES.ACTIVE | STATUS_TYPES.AWAY | STATUS_TYPES.DO_NOT_DISTURB;
 }
-
+let user: any = localStorage.getItem("authUser");
+user = JSON.parse(user).user;
+user.profile = user.avatar ? user.avatar : 'https://chat.7erver.com/static/media/profile-placeholder.23f97dd86521d98af9c4.png';
+user.coverImage = user.coverImage ? user.coverImage : 'https://chat.7erver.com/static/media/img-2.47239849213a8e77c6ce.jpg';
+user.fullName = user.firstName+" "+user.lastName;
 let settings: SettingsTypes = {
-  basicDetails: {
-    firstName: "Eddie",
-    lastName: "Villanueva",
-    profile: avatar1,
-    coverImage: img4,
-    email: "evillanueva@d8me.live",
-    location: "Las Vegas, Nevada, USA",
-  },
+  basicDetails: user,
   theme: {
     // color: "bgcolor-radio1",
     image: "bgimg-radio5",

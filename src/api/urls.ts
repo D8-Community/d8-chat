@@ -1,6 +1,7 @@
 //auth
 export const POST_FAKE_LOGIN = "/post-fake-login";
-export const POST_FAKE_JWT_LOGIN = "/post-jwt-login";
+export const POST_JWT_LOGIN = "https://apidb.d8me.live/api/auth/local";
+export const POST_FAKE_JWT_LOGIN = "https://apidb.d8me.live/api/auth/local";
 export const POST_FAKE_PASSWORD_FORGET = "/fake-forget-pwd";
 export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 export const SOCIAL_LOGIN = "/social-login";
@@ -10,7 +11,7 @@ export const POST_FAKE_REGISTER = "/post-fake-register";
 export const USER_CHANGE_PASSWORD = "/user-change-password";
 
 // profile & settings
-export const GET_PROFILE_DETAILS = "/profile-details";
+export const GET_PROFILE_DETAILS = "https://apidb.d8me.live/api/users/me?populate=*";
 export const GET_USER_SETTINGS = "/user-settings";
 export const UPDATE_ETTINGS = "/update-user-settings";
 

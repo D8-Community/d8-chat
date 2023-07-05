@@ -40,11 +40,11 @@ import {
 import { settings, onChangeSettings } from "../data/settings";
 
 const accessToken =
-  "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImFkbWluIiwiYWRtaW4iOnRydWUsImp0aSI6ImQ2MTEwYzAxLWMwYjUtNDUzNy1iNDZhLTI0NTk5Mjc2YjY1NiIsImlhdCI6MTU5MjU2MDk2MCwiZXhwIjoxNTkyNTY0NjE5fQ.QgFSQtFaK_Ktauadttq1Is7f9w0SUtKcL8xCmkAvGLw";
+  "Bearer "+myData.accessToken;
 
 let users = [myData];
 
-const fakeBackend = () => {
+const strapiBackend = () => {
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios, { onNoMatch: "passthrough" });
 
@@ -61,7 +61,7 @@ const fakeBackend = () => {
   mock.onPost("/post-fake-login").reply(config => {
     const user = JSON.parse(config["data"]);
     const validUser = users.filter(
-      usr => usr.email === user.email && usr.password === user.password
+      usr => usr.email === user.user.email && usr.accessToken === user.jwt
     );
 
     return new Promise((resolve, reject) => {
@@ -103,16 +103,15 @@ const fakeBackend = () => {
   mock.onPost("/post-jwt-login").reply(config => {
     const user = JSON.parse(config["data"]);
     const validUser = users.filter(
-      usr => usr.email === user.email && usr.password === user.password
+      usr => usr.email === user.email && usr.accessToken === user.jwt
     );
-
+    
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log(validUser)
+        
         if (validUser["length"] === 1) {
           // You have to generate AccessToken by jwt. but this is fakeBackend so, right now its dummy
-          const token = accessToken;
-
+         const token = accessToken;
           // JWT AccessToken
           const tokenObj = { accessToken: token }; // Token Obj
           const validUserObj = { ...validUser[0], ...tokenObj }; // validUser Obj
@@ -130,12 +129,10 @@ const fakeBackend = () => {
 
   mock.onPost("/post-jwt-profile").reply(config => {
     const user = JSON.parse(config["data"]);
-
     const one = config.headers;
-
     let finalToken = one.Authorization;
 
-    const validUser = users.filter(usr => usr.uid === user.idx);
+    const validUser = users.filter(usr => usr.uid === user.user.id);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -145,7 +142,7 @@ const fakeBackend = () => {
             let objIndex;
 
             //Find index of specific object using findIndex method.
-            objIndex = users.findIndex(obj => obj.uid === user.idx);
+            objIndex = users.findIndex(obj => obj.uid === user.user.id);
 
             //Update object's name property.
             users[objIndex].username = user.username;
@@ -167,8 +164,7 @@ const fakeBackend = () => {
 
   mock.onPost("/post-fake-profile").reply(config => {
     const user = JSON.parse(config["data"]);
-
-    const validUser = users.filter(usr => usr.uid === user.idx);
+    const validUser = users.filter(usr => usr.uid === user.user.id);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -176,10 +172,10 @@ const fakeBackend = () => {
           let objIndex;
 
           //Find index of specific object using findIndex method.
-          objIndex = users.findIndex(obj => obj.uid === user.idx);
+          objIndex = users.findIndex(obj => obj.uid === user.user.id);
 
           //Update object's name property.
-          users[objIndex].username = user.username;
+          users[objIndex].username = user.user.username;
 
           // Assign a value to locastorage
           localStorage.removeItem("authUser");
@@ -1017,4 +1013,4 @@ const fakeBackend = () => {
   });
 };
 
-export default fakeBackend;
+export default strapiBackend;

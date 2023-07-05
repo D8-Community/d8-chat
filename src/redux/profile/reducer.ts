@@ -10,6 +10,7 @@ const Profile = (state = INIT_STATE, action: any) => {
     case ProfileActionTypes.API_RESPONSE_SUCCESS:
       switch (action.payload.actionType) {
         case ProfileActionTypes.GET_PROFILE_DETAILS:
+          console.log(action, state)
           return {
             ...state,
             profileDetails: action.payload.data,

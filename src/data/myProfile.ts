@@ -42,20 +42,13 @@ export interface ProfileDetailsTypes {
   media: MediaTypes;
   attachedFiles: AttachedfileTypes;
 }
-
+let user: any = localStorage.getItem("authUser");
+user = JSON.parse(user).user;
+user.avatar= user.avatar ? user.avatar : 'https://chat.7erver.com/static/media/profile-placeholder.23f97dd86521d98af9c4.png';
+user.coverImage = user.coverImage ? user.coverImage : 'https://chat.7erver.com/static/media/img-2.47239849213a8e77c6ce.jpg';
+user.fullName = user.firstName+" "+user.lastName;
 const profileDetails: ProfileDetailsTypes = {
-  basicDetails: {
-    firstName: "Kathryn",
-    lastName: "Swarey",
-    title: "Front end Developer",
-    description:
-      "If several languages coalesce, the grammar of the resulting language is more simple.",
-    fullName: "Kathryn Swarey",
-    email: "admin@D8me.live",
-    location: "California, USA",
-    avatar: avatar1,
-    coverImage: image4,
-  },
+  basicDetails: user,
   media: {
     total: 17,
     list: [
@@ -112,16 +105,17 @@ const profileDetails: ProfileDetailsTypes = {
   },
 };
 
-let user: any = localStorage.getItem("authUser");
-user = JSON.parse(user);
+
 
 const myData = {
-  uid: user && user.uid ? user.uid : 1,
-  username: "evillanueva",
-  role: "admin",
-  password: "123456",
+  uid: user && user.id ? user.id : 1,
+  username: user.username,
+  role: user.role,
+  password: '',
   email: profileDetails.basicDetails.email,
   profileImage: profileDetails.basicDetails.avatar,
+  accessToken: user.jwt
 };
+
 
 export { profileDetails, myData };

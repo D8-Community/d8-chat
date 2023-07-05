@@ -28,15 +28,17 @@ function* loginUser({ payload: { user } }: any) {
         user.email,
         user.password
       );
+      console.log(response,'firebase')
       // myData
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response)
       );
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response: Promise<any> = yield call(postJwtLogin, {
-        email: user.email,
+        identifier: user.email,
         password: user.password,
       });
+      console.log(response,'jwt')
       setLoggeedInUser(response);
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response)
@@ -46,6 +48,7 @@ function* loginUser({ payload: { user } }: any) {
         email: user.email,
         password: user.password,
       });
+      console.log(response,'fake')
       setLoggeedInUser(response);
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response)

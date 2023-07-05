@@ -10,9 +10,11 @@ const Login = (state = INIT_STATE, action: any) => {
     case AuthLoginActionTypes.API_RESPONSE_SUCCESS:
       switch (action.payload.actionType) {
         case AuthLoginActionTypes.LOGIN_USER:
+          console.log(state, AuthLoginActionTypes.LOGIN_USER)
+          action.payload.data.user.accessToken = action.payload.data.jwt;
           return {
             ...state,
-            user: action.payload.data,
+            user: action.payload.data.user,
             loading: false,
             isUserLogin: true,
             isUserLogout: false,
